@@ -19,7 +19,7 @@ import java.util.Scanner;
 //        }
 //    }
 //}
-//todo: spróbować rozszerzyć piramidę 1-5-9
+////todo: spróbować rozszerzyć piramidę 1-5-9
 
 public class zad2 {
     public static void main(String[] args) {
