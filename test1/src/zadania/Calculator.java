@@ -15,6 +15,11 @@ public class Calculator {
             System.out.println("Podaj drugą liczbę:");
             double b = scanner.nextDouble();
 
+            if ((symbol.equals("/") || symbol.equals("%")) && b == 0) {
+                System.out.println("Nie dziel Cholero nigdy przez zero!");
+                continue;
+            }
+
             result = switch (symbol) {
                 case "+" -> a + b;
                 case "-" -> a - b;
@@ -33,15 +38,10 @@ public class Calculator {
             System.out.println(result);
             System.out.println("Czy chcesz kontynuować obliczenia? y/n");
             String continueSymbol = scanner.next();
-            if (!continueSymbol.equals("y")) {
+            if (continueSymbol.equals("n")) {
                 break;
             }
         }
-        if (result % 2 == 0) {
-            System.out.println("Ostatni wynik jest parzysty.");
-        } else if (result % 2 == 1) {
-            System.out.println("Ostatni wynik jest nieparzysty.");
-        }
+        System.out.println(result % 2 == 0 ? "Ostatni wynik jest parzysty." : "Ostatni wynik jest nieparzysty.");
     }
 }
-//todo: ternary i dzielenie przez 0
