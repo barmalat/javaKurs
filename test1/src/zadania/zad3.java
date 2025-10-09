@@ -10,7 +10,6 @@ int x = 1;
                 tab[i][j] = x++;
                 System.out.print(tab[i][j]);
             }
-
         }
 //        tab [0][0] = 1;
 //        tab [0][1] = 2;
