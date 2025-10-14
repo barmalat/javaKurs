@@ -30,9 +30,10 @@ public class Main {
         jedziemy.add(motorcycle1);
 
         for (Drivable drivable : jedziemy) {
-            drivable.drive();
+            drivable.drive(400);
         }
 
-        car1.refuel(9.5);
+        car1.refuel(20);
+        motorcycle1.refuel(0);
     }
 }

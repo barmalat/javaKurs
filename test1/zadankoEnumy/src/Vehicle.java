@@ -39,7 +39,7 @@ public abstract class Vehicle {
     ;
 
     void refuel(double liters) {
-        if (liters + fuelCondition < maxFuel) {
+        if (liters + fuelCondition <= maxFuel) {
             double result = liters * fuel.getPrice();
             System.out.println("Tankuje pojazd za kwotę: " + result);
             refueling(liters);
@@ -47,7 +47,7 @@ public abstract class Vehicle {
 
         } else {
             double maxAdd = maxFuel - fuelCondition;
-            System.out.println("Nie możesz tyle zatankować! Maksymalnie wlejesz " + maxAdd + " l.");
+            System.out.println("Nie możesz tyle zatankować! Maksymalnie wlejesz jeszcze " + maxAdd + " l.");
         }
     }
     void refueling(double liters){
