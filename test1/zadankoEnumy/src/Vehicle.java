@@ -43,7 +43,6 @@ public abstract class Vehicle {
             double result = liters * fuel.getPrice();
             System.out.println("Tankuje pojazd za kwotę: " + result);
             refueling(liters);
-            System.out.println("Masz teraz w baku: " + fuelCondition + " l.");
 
         } else {
             double maxAdd = maxFuel - fuelCondition;
@@ -52,5 +51,6 @@ public abstract class Vehicle {
     }
     void refueling(double liters){
         fuelCondition += liters;
+        System.out.println("Masz teraz w baku: " + fuelCondition + " l.");
     }
 }
