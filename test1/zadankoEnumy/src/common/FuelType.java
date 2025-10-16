@@ -1,17 +1,19 @@
 package common;
 
+import java.math.BigDecimal;
+
 public enum FuelType {
-    PETROL(5.5),
-    DIESEL(6.0),
-    ELECTRIC(3.0);
+    PETROL(new BigDecimal("5.5")),
+    DIESEL(new BigDecimal("6.5")),
+    ELECTRIC(new BigDecimal("3.0"));
 
-    private final double price;
+    private final BigDecimal price;
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    FuelType(double price) {
+    FuelType(BigDecimal price) {
         this.price = price;
     }
 }

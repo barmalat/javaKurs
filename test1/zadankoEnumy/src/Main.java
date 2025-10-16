@@ -1,5 +1,3 @@
-import common.FuelType;
-
 import java.util.ArrayList;
 
 import static common.FuelType.DIESEL;
@@ -9,13 +7,6 @@ public class Main {
     public static void main(String[] args) {
         Car car1 = new Car("Volvo", "XC60", 2019, DIESEL, 50, 75, 10, 5);
         Motorcycle motorcycle1 = new Motorcycle("Harley", "Davidson", 2000, PETROL, 20, 30, 5);
-
-//        car1.refuel(10);
-//        motorcycle1.refuel(5);
-//        car1.drive();
-//        car1.displayInfo();
-//        motorcycle1.drive();
-//        motorcycle1.displayInfo();
 
         ArrayList<Vehicle> pojazdy = new ArrayList<>();
         pojazdy.add(car1);

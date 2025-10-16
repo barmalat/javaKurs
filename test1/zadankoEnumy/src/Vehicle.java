@@ -1,5 +1,7 @@
 import common.FuelType;
 
+import java.math.BigDecimal;
+
 public abstract class Vehicle {
     String brand;
     String model;
@@ -32,24 +34,26 @@ public abstract class Vehicle {
         this.averageFuelConsumption = averageFuelConsumption;
     }
 
-    void displayInfo() {
+    protected void displayInfo() {
         System.out.println(toString());
     }
 
-    ;
-
-    void refuel(double liters) {
+    protected void refuel(double liters) {
         if (liters + fuelCondition <= maxFuel) {
-            double result = liters * fuel.getPrice();
+            BigDecimal result = fuel.getPrice().multiply(BigDecimal.valueOf(liters));
             System.out.println("Tankuje pojazd za kwotę: " + result);
             refueling(liters);
-
         } else {
             double maxAdd = maxFuel - fuelCondition;
             System.out.println("Nie możesz tyle zatankować! Maksymalnie wlejesz jeszcze " + maxAdd + " l.");
         }
     }
-    void refueling(double liters){
+
+    protected double calculateFuelConsuption(double kilometers) {
+        return kilometers * averageFuelConsumption / 100;
+    }
+
+    private void refueling(double liters) {
         fuelCondition += liters;
         System.out.println("Masz teraz w baku: " + fuelCondition + " l.");
     }

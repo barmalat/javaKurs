@@ -7,16 +7,13 @@ public class Car extends Vehicle implements Drivable {
         super(brand, model, year, fuel, fuelCondition, maxFuel, averageFuelConsumption);
         this.doors = doors;
     }
-    private double calculateFuelConsuption(double kilometers){
-        return kilometers * averageFuelConsumption / 100;
-    }
 
     @Override
     public void drive(double kilometers) {
-        double fuelConsuption = calculateFuelConsuption(kilometers);
-        if (fuelConsuption <= fuelCondition) {
+        double fuelConsumption = calculateFuelConsuption(kilometers);
+        if (fuelConsumption <= fuelCondition) {
             System.out.println("Samochód jedzie.");
-            fuelCondition -= fuelConsuption;
+            fuelCondition -= fuelConsumption;
         } else {
             double maxDrive = fuelCondition / averageFuelConsumption * 100;
             System.out.println("Masz za mało paliwa, żeby tyle przejechać! Starczy ci na maksymalnie " + maxDrive + " km.");

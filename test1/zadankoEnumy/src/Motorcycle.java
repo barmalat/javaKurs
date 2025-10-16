@@ -6,10 +6,11 @@ public class Motorcycle extends Vehicle implements Drivable{
     }
 
     @Override
-    public void drive(double kilometers) {
-        if (kilometers * averageFuelConsumption / 100 <= fuelCondition) {
+        public void drive(double kilometers) {
+        double fuelConsumption = calculateFuelConsuption(kilometers);
+        if (fuelConsumption <= fuelCondition) {
             System.out.println("Motocykl jedzie.");
-            fuelCondition -= kilometers * averageFuelConsumption / 100;
+            fuelCondition -= fuelConsumption;
         } else {
             double maxDrive = fuelCondition / averageFuelConsumption * 100;
             System.out.println("Masz za mało paliwa, żeby tyle przejechać! Starczy ci na maksymalnie " + maxDrive + " km.");
