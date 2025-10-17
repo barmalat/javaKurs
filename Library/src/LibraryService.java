@@ -7,11 +7,11 @@ public class LibraryService {
     public static int licznikFilmow = 0;
 
     public void showLibraryItems() {
-        System.out.println(libraryItems);
+        System.out.println("Wszystkie pozycje: " + libraryItems);
     }
 
     public void showAvailableItems(){
-        System.out.println(availableLibraryItems);
+        System.out.println("Dostępne pozycje: " + availableLibraryItems);
     }
 
     public void showNumbersOfLibraryItems() {
