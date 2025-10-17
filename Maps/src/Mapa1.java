@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Mapa1 {
     public static void main(String[] args) {
@@ -19,7 +16,7 @@ public class Mapa1 {
         }
         System.out.println("Punkty: " + points);
 
-        HashMap<Long, Point> pointsMap = new HashMap<>();
+        Map<Long, Point> pointsMap = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
             pointsMap.put((long) points.get(i).getX(), points.get(i));
@@ -30,3 +27,4 @@ public class Mapa1 {
         System.out.println("Liczba punktów na mapie: " + pointsMap.size());
     }
 }
+//todo: zupdatować zgodnie z poleceniem.
