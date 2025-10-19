@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Mapa1 {
     public static void main(String[] args) {
@@ -8,23 +9,23 @@ public class Mapa1 {
 
         System.out.println("Podaj liczbę punktów do wygenerowania:");
         int n = scanner.nextInt();
-        ArrayList<Point> points = new ArrayList<>();
+        List<Point> points = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            Point point = new Point(random.nextInt(), random.nextInt());
+            Point point = new Point(random.nextInt(10), random.nextInt(10));
             points.add(point);
         }
         System.out.println("Punkty: " + points);
 
-        Map<Long, Point> pointsMap = new HashMap<>();
+        points.sort(Comparator.comparing(point -> point.x));
+        System.out.println("Posortowane punkty: " + points);
 
-        for (int i = 0; i < n; i++) {
-            pointsMap.put((long) points.get(i).getX(), points.get(i));
+        Map<Long, List<Point>> pointsMap = new HashMap<>();
+
+        for (Point point : points) {
+            pointsMap.computeIfAbsent((long) point.x, k -> new ArrayList<>()).add(point);
         }
-        System.out.println("Mapa punktów: " + pointsMap);
 
-        System.out.println("Liczba punktów na liście: " + points.size());
-        System.out.println("Liczba punktów na mapie: " + pointsMap.size());
+        System.out.println("Mapa punktów:" + pointsMap);
     }
 }
-//todo: zupdatować zgodnie z poleceniem.
