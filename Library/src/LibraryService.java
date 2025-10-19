@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class LibraryService {
     public ArrayList<LibraryItem> libraryItems = new ArrayList<>();
+    public ArrayList<LibraryItem> availableLibraryItems = new ArrayList<>();
 
     public static int licznikKsiazek = 0;
     public static int licznikFilmow = 0;
@@ -10,16 +11,8 @@ public class LibraryService {
         System.out.println("Wszystkie pozycje: " + libraryItems);
     }
 
-    public void showAvailableItems(){
+    public void showAvailableItems() {
         System.out.println("Dostępne pozycje: " + availableLibraryItems);
-    }
-
-    public void showNumbersOfLibraryItems() {
-        System.out.println(libraryItems.size());
-    }
-
-    public void showNumbersOfAvailableLibraryItems() {
-        System.out.println(availableLibraryItems.size());
     }
 
     public void addItem(LibraryItem item) {
@@ -32,11 +25,8 @@ public class LibraryService {
         }
     }
 
-    public ArrayList<LibraryItem> availableLibraryItems = new ArrayList<>();
-
-
     public void borrowItem(String title) {
-        int i = 0;
+        int i;
         int counter = 0;
 
         for (i = 0; i < availableLibraryItems.size(); i++) {
@@ -59,19 +49,19 @@ public class LibraryService {
     }
 
     public void returnItem(String title) {
-        int i = 0;
+        int i;
         int counter = 0;
 
         for (i = 0; i < libraryItems.size(); i++) {
             if (libraryItems.get(i).equals(new Book(title)) || libraryItems.get(i).equals(new Movie(title))) {
-                for (int j = 0; j < availableLibraryItems.size(); j++) {
-                    if (availableLibraryItems.get(j).equals(new Book(title)) || availableLibraryItems.get(j).equals(new Movie(title))) {
+                for (LibraryItem availableLibraryItem : availableLibraryItems) {
+                    if (availableLibraryItem.equals(new Book(title)) || availableLibraryItem.equals(new Movie(title))) {
                         System.err.println("Nie możesz zwrócić książki, która nie została wypożyczona!");
                         counter = 2;
                         break;
                     }
                 }
-                while (!(counter == 2)) {
+                if (!(counter == 2)) {
                     if (libraryItems.get(i) instanceof Book) {
                         System.out.println("Zwróciłeś książkę pt. " + libraryItems.get(i).toString());
                         licznikKsiazek++;
@@ -81,7 +71,6 @@ public class LibraryService {
                     }
                     availableLibraryItems.add(libraryItems.get(i));
                     counter = 1;
-                    break;
                 }
             }
         }

@@ -1,18 +1,9 @@
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class LibraryItem {
     protected String title;
 
     public LibraryItem(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
     }
 

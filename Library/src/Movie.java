@@ -1,4 +1,4 @@
-public class Movie extends LibraryItem{
+public class Movie extends LibraryItem {
     private String director;
     private int duration;
 
@@ -14,25 +14,9 @@ public class Movie extends LibraryItem{
 
     @Override
     public String toString() {
-        return "Movie: " +
+        return "\nMovie: " +
                 "title='" + title + '\'' +
                 ", director='" + director + '\'' +
                 ", duration=" + duration;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 }

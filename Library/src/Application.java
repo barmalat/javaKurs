@@ -12,53 +12,31 @@ public class Application {
         service.addItem(new Movie("Psy 2", "Pasikowski", 111));
         service.addItem(new Movie("Psy 3", "Pasikowski", 121));
 
-        int opt = 2;
+        String opt = "1";
 
-        while (!(opt == 0)) {
-            System.out.println("Dostępne opcje:\n 1-Wyświetl listę elementów \n 2-Wypożycz tytuł \n 3-Zwróć tytuł \n 4-Wyświetl liczbę elementów \n 0-Wyjdź z aplikacji");
-            opt = input.nextInt();
+        while (!(opt.equals("0"))) {
+            System.out.println("\nDostępne opcje:\n 1-Wyświetl listę elementów \n 2-Wypożycz tytuł \n 3-Zwróć tytuł \n 4-Wyświetl liczbę elementów \n 0-Wyjdź z aplikacji");
+            opt = input.next();
             switch (opt) {
-                case 1:
+                case "1" -> {
                     service.showLibraryItems();
                     service.showAvailableItems();
-                    break;
-                case 2:
+                }
+                case "2" -> {
                     System.out.println("Podaj tytuł który chcesz wypożyczyć: ");
-                    String title = input.nextLine();
-                    service.borrowItem(title);
-                    break;
-                case 3:
+                    service.borrowItem(input.next());
+                }
+                case "3" -> {
                     System.out.println("Podaj tytuł który chcesz zwrócić: ");
-                    service.returnItem(input.nextLine());
-                    break;
-                case 4:
+                    service.returnItem(input.next());
+                }
+                case "4" -> {
                     System.out.println("Filmów jest: " + LibraryService.licznikFilmow);
                     System.out.println("Książek jest: " + LibraryService.licznikKsiazek);
-                    break;
+                }
+                case "0" -> System.out.print("");
+                default -> System.err.println("Nie ma takiej opcji w programie.");
             }
         }
-
-
-        //service.showLibraryItems();
-//        service.showNumbersOfLibraryItems();
-//        System.out.println("Filmów jest: " + LibraryService.licznikFilmow);
-//        System.out.println("Książek jest: " + LibraryService.licznikKsiazek);
-//
-//
-//
-//        service.showLibraryItems();
-//        service.showNumbersOfLibraryItems();
-//        service.showNumbersOfAvailableLibraryItems();
-//        System.out.println("Filmów jest: " + LibraryService.licznikFilmow);
-//        System.out.println("Książek jest: " + LibraryService.licznikKsiazek);
-//
-//        System.out.println("___________");
-//        service.returnItem("Potop");
-//
-//        System.out.println("Filmów jest: " + LibraryService.licznikFilmow);
-//        System.out.println("Książek jest: " + LibraryService.licznikKsiazek);
-//        service.showNumbersOfAvailableLibraryItems();
-
-
     }
 }
