@@ -78,4 +78,4 @@ public class LibraryService {
             System.err.println("Niestety nie mamy takiej pozycji w naszej bibliotece więc nie możesz jej zwrócić");
         }
     }
-}
+}//todo:zamienic w equalsie na porownywanie stringow z .getTitle
