@@ -17,13 +17,16 @@ public class Mapa1 {
         }
         System.out.println("Punkty: " + points);
 
-        points.sort(Comparator.comparing(point -> point.x));
-        System.out.println("Posortowane punkty: " + points);
-
         Map<Long, List<Point>> pointsMap = new HashMap<>();
 
         for (Point point : points) {
-            pointsMap.computeIfAbsent((long) point.x, k -> new ArrayList<>()).add(point);
+            if (pointsMap.keySet().contains(point.x)) {
+                pointsMap.get(point.x).add(point);
+            } else {
+                List<Point> xPoints = new ArrayList<>();
+                pointsMap.put((long) point.x, xPoints);
+                xPoints.add(point);
+            }
         }
 
         System.out.println("Mapa punktów:" + pointsMap);
