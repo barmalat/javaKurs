@@ -8,10 +8,6 @@ public class Movie extends LibraryItem {
         this.duration = duration;
     }
 
-    public Movie(String title) {
-        super(title);
-    }
-
     @Override
     public String toString() {
         return "\nMovie: " +

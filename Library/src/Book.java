@@ -9,11 +9,6 @@ public class Book extends LibraryItem {
     }
 
     @Override
-    public String getTitle() {
-        return super.getTitle();
-    }
-
-    @Override
     public String toString() {
         return "\nBook: " +
                 "title='" + title + '\'' +
