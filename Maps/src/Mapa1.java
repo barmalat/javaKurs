@@ -17,14 +17,14 @@ public class Mapa1 {
         }
         System.out.println("Punkty: " + points);
 
-        Map<Long, List<Point>> pointsMap = new HashMap<>();
+        Map<Integer, List<Point>> pointsMap = new HashMap<>();
 
         for (Point point : points) {
-            if (pointsMap.keySet().contains(point.x)) {
+            if (pointsMap.containsKey(point.x)) {
                 pointsMap.get(point.x).add(point);
             } else {
                 List<Point> xPoints = new ArrayList<>();
-                pointsMap.put((long) point.x, xPoints);
+                pointsMap.put(point.x, xPoints);
                 xPoints.add(point);
             }
         }
