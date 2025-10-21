@@ -4,6 +4,7 @@ public class Application {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         LibraryService service = new LibraryService();
+        boolean isRunning = true;
 
         service.addItem(new Book("Potop", "Sienkiewicz", 456));
         service.addItem(new Book("Ogniem i mieczem", "Sienkiewicz", 486));
@@ -12,16 +13,13 @@ public class Application {
         service.addItem(new Movie("Psy 2", "Pasikowski", 111));
         service.addItem(new Movie("Psy 3", "Pasikowski", 121));
 
-        String opt = "1";
+        String opt;
 
-        while (!(opt.equals("0"))) {
+        while (isRunning) {
             System.out.println("\nDostępne opcje:\n 1-Wyświetl listę elementów \n 2-Wypożycz tytuł \n 3-Zwróć tytuł \n 4-Wyświetl liczbę elementów \n 0-Wyjdź z aplikacji");
             opt = input.next();
             switch (opt) {
-                case "1" -> {
-                    service.showLibraryItems();
-                    service.showAvailableItems();
-                }
+                case "1" -> service.showLibraryItems();
                 case "2" -> {
                     System.out.println("Podaj tytuł który chcesz wypożyczyć: ");
                     service.borrowItem(input.next());
@@ -34,7 +32,7 @@ public class Application {
                     System.out.println("Filmów jest: " + LibraryService.licznikFilmow);
                     System.out.println("Książek jest: " + LibraryService.licznikKsiazek);
                 }
-                case "0" -> System.out.print("");
+                case "0" -> isRunning = false;
                 default -> System.err.println("Nie ma takiej opcji w programie.");
             }
         }

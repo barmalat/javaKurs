@@ -8,8 +8,9 @@ public class Book extends LibraryItem {
         this.pages = pages;
     }
 
-    public Book(String title) {
-        super(title);
+    @Override
+    public String getTitle() {
+        return super.getTitle();
     }
 
     @Override
