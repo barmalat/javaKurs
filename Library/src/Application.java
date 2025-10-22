@@ -22,11 +22,19 @@ public class Application {
                 case "1" -> service.showLibraryItems();
                 case "2" -> {
                     System.out.println("Podaj tytuł który chcesz wypożyczyć: ");
-                    service.borrowItem(input.nextLine());
+                    try {
+                        service.borrowItem(input.nextLine());
+                    } catch (ItemIsNotAvailableException e) {
+                        System.err.println(e.getMessage());
+                    }
                 }
                 case "3" -> {
                     System.out.println("Podaj tytuł który chcesz zwrócić: ");
-                    service.returnItem(input.nextLine());
+                    try{
+                        service.returnItem(input.nextLine());
+                    } catch (ItemAlreadyAvailableException e){
+                        System.err.println(e.getMessage());
+                    }
                 }
                 case "4" -> {
                     System.out.println("Filmów jest: " + LibraryService.licznikFilmow);

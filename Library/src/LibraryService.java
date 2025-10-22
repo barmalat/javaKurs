@@ -35,34 +35,43 @@ public class LibraryService {
         }
     }
 
-    public LibraryItem findByTitle(String title) {
+    public LibraryItem findByTitle(String title) throws ItemNotFoundException {
         for (LibraryItem item : libraryItems) {
             if (item.getTitle().equals(title)) {
                 return item;
             }
         }
-        return null;
+        throw new ItemNotFoundException("Nie mamy takiej pozycji w bibliotece.");
     }
 
     public void borrowItem(String title) {
-        LibraryItem item = findByTitle(title);
-        if (item == null) {
-            System.err.println("Nie mamy takiej pozycji w bibliotece.");
-        } else if (!item.isAvailability()) {
-            System.err.println("Niestety ta pozycja została już wypożyczona.");
+        LibraryItem item;
+        try {
+            item = findByTitle(title);
+        } catch (ItemNotFoundException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        if (!item.isAvailability()) {
+            throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
         } else {
             System.out.println("Wypożyczasz: " + item);
             item.setAvailability(false);
             reduceCounter(item);
         }
+
     }
 
     public void returnItem(String title) {
-        LibraryItem item = findByTitle(title);
-        if (item == null) {
-            System.err.println("Nie mamy takiej pozycji w bibliotece.");
-        } else if (item.isAvailability()) {
-            System.err.println("Niestety ta pozycja nie została jeszcze wypożyczona.");
+        LibraryItem item;
+        try {
+            item = findByTitle(title);
+        } catch (ItemNotFoundException e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        if (item.isAvailability()) {
+            throw new ItemAlreadyAvailableException("Niestety ta pozycja nie została jeszcze wypożyczona.");
         } else {
             System.out.println("Oddajesz: " + item);
             item.setAvailability(true);
