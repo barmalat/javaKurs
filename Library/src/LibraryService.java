@@ -56,7 +56,6 @@ public class LibraryService {
             item.setAvailability(false);
             reduceCounter(item);
         }
-
     }
 
     public void returnItem(String title) throws ItemNotFoundException {
