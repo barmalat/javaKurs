@@ -35,22 +35,19 @@ public class LibraryService {
         }
     }
 
-    public LibraryItem findByTitle(String title) throws ItemNotFoundException {
+    public LibraryItem findByTitle(String title) {
         for (LibraryItem item : libraryItems) {
             if (item.getTitle().equals(title)) {
                 return item;
             }
         }
-        throw new ItemNotFoundException("Nie mamy takiej pozycji w bibliotece.");
+        return null;
     }
 
-    public void borrowItem(String title) {
-        LibraryItem item;
-        try {
-            item = findByTitle(title);
-        } catch (ItemNotFoundException e) {
-            System.err.println(e.getMessage());
-            return;
+    public void borrowItem(String title) throws ItemNotFoundException {
+        LibraryItem item = findByTitle(title);
+        if (item == null) {
+            throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
         }
         if (!item.isAvailability()) {
             throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
@@ -62,13 +59,10 @@ public class LibraryService {
 
     }
 
-    public void returnItem(String title) {
-        LibraryItem item;
-        try {
-            item = findByTitle(title);
-        } catch (ItemNotFoundException e) {
-            System.err.println(e.getMessage());
-            return;
+    public void returnItem(String title) throws ItemNotFoundException {
+        LibraryItem item = findByTitle(title);
+        if (item == null) {
+            throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
         }
         if (item.isAvailability()) {
             throw new ItemAlreadyAvailableException("Niestety ta pozycja nie została jeszcze wypożyczona.");
