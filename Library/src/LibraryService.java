@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class LibraryService {
     public ArrayList<LibraryItem> libraryItems = new ArrayList<>();
@@ -35,27 +36,26 @@ public class LibraryService {
         }
     }
 
-    public LibraryItem findByTitle(String title) {
+    public Optional<LibraryItem> findByTitle(String title) {
         for (LibraryItem item : libraryItems) {
             if (item.getTitle().equals(title)) {
-                return item;
+                return Optional.of(item);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     public void borrowItem(String title) throws ItemNotFoundException {
-        LibraryItem item = findByTitle(title);
-        if (item == null) {
-            throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
-        }
-        if (!item.isAvailability()) {
-            throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
-        } else {
-            System.out.println("Wypożyczasz: " + item);
-            item.setAvailability(false);
-            reduceCounter(item);
-        }
+        if (findByTitle(title).isPresent()) {
+            LibraryItem item = findByTitle(title).get();
+            if (!item.isAvailability()) {
+                throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
+            } else {
+                System.out.println("Wypożyczasz: " + item);
+                item.setAvailability(false);
+                reduceCounter(item);
+            }
+        } //else throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
     }
 
     public void returnItem(String title) throws ItemNotFoundException {
