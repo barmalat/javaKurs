@@ -1,14 +1,14 @@
-public class Stack {
-    private Node head;
+public class Stack<T> {
+    private Node<T> head;
     private int size;
 
-    public Node getHead() {
+    public Node<T> getHead() {
         return head;
     }
 
     public void printAll() {
         System.out.println(head.getValue());
-        Node temp = head;
+        Node<T> temp = head;
         while (temp != null) {
             if (temp.getNext() != null) {
                 System.out.println(temp.getNext().getValue());
@@ -17,9 +17,9 @@ public class Stack {
         }
     }
 
-    public void pushLast(int newValue) {
-        Node newLast = new Node(newValue, null);
-        Node oldLast = head;
+    public void pushLast(T newValue) {
+        Node<T> newLast = new Node<>(newValue, null);
+        Node<T> oldLast = head;
         while (oldLast.getNext() != null) {
             oldLast = oldLast.getNext();
         }
@@ -27,7 +27,7 @@ public class Stack {
     }
 
 //    public void removeAll(int value) {
-//        Node temp = head;
+//        Node<T>temp = head;
 //        while (temp.getValue() == value) {
 //            temp = temp.getNext();
 //            head = temp;
@@ -43,17 +43,17 @@ public class Stack {
 //        }
 //    }todo
 
-    public void remove(int value) {
-        Node temp = head;
+    public void remove(T value) {
+        Node<T> temp = head;
         if (head == null) {
             return;
         }
-        if (temp.getValue() == value) {
+        if (temp.getValue().equals(value)) {
             head = temp.getNext();
             return;
         }
         while (temp.getNext() != null) {
-            if (temp.getNext().getValue() == value) {
+            if (temp.getNext().getValue().equals(value)) {
                 temp.setNext(temp.getNext().getNext());
                 return;
             }
@@ -61,12 +61,12 @@ public class Stack {
         }
     }
 
-    public void push(int newValue) {
-        head = new Node(newValue, head);
+    public void push(T newValue) {
+        head = new Node<>(newValue, head);
     }
 
-    public int pop() {
-        int result = head.getValue();
+    public T pop() {
+        T result = head.getValue();
         head = head.getNext();
         return result;
     }
