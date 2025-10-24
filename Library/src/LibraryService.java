@@ -46,28 +46,24 @@ public class LibraryService {
     }
 
     public void borrowItem(String title) throws ItemNotFoundException {
-        if (findByTitle(title).isPresent()) {
-            LibraryItem item = findByTitle(title).get();
-            if (!item.isAvailability()) {
-                throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
-            } else {
-                System.out.println("Wypożyczasz: " + item);
-                item.setAvailability(false);
-                reduceCounter(item);
-            }
-        } else throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
+        LibraryItem item = findByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie ma takiej pozycji w bibliotece."));
+        if (!item.isAvailability()) {
+            throw new ItemIsNotAvailableException("Niestety ta pozycja została już wypożyczona.");
+        } else {
+            System.out.println("Wypożyczasz: " + item);
+            item.setAvailability(false);
+            reduceCounter(item);
+        }
     }
 
     public void returnItem(String title) throws ItemNotFoundException {
-        if (findByTitle(title).isPresent()) {
-            LibraryItem item = findByTitle(title).get();
-            if (item.isAvailability()) {
-                throw new ItemAlreadyAvailableException("Niestety ta pozycja nie została jeszcze wypożyczona.");
-            } else {
-                System.out.println("Oddajesz: " + item);
-                item.setAvailability(true);
-                increaseCounter(item);
-            }
-        } else throw new ItemNotFoundException("Nie ma takiej pozycji w bibliotece.");
+        LibraryItem item = findByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie ma takiej pozycji w bibliotece."));
+        if (item.isAvailability()) {
+            throw new ItemAlreadyAvailableException("Niestety ta pozycja nie została jeszcze wypożyczona.");
+        } else {
+            System.out.println("Oddajesz: " + item);
+            item.setAvailability(true);
+            increaseCounter(item);
+        }
     }
 }
