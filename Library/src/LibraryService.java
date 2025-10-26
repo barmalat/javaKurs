@@ -57,7 +57,7 @@ public class LibraryService {
     }
 
     public void returnItem(String title) throws ItemNotFoundException {
-        LibraryItem item = findByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie ma takiej pozycji w bibliotece."));
+        LibraryItem item = findByTitle(title).orElseThrow(() -> new ItemNotFoundException("Nie ma takiej pozycji w bibliotece. "));
         if (item.isAvailability()) {
             throw new ItemAlreadyAvailableException("Niestety ta pozycja nie została jeszcze wypożyczona.");
         } else {
