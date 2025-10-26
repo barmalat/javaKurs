@@ -7,6 +7,10 @@ public class Stack<T> {
     }
 
     public void printAll() {
+        if (head==null){
+            System.err.println("Stack jest pusty");
+            return;
+        }
         System.out.println(head.getValue());
         Node<T> temp = head;
         while (temp != null) {
@@ -26,23 +30,6 @@ public class Stack<T> {
         oldLast.setNext(newLast);
     }
 
-//    public void removeAll(int value) {
-//        Node<T>temp = head;
-//        while (temp.getValue() == value) {
-//            temp = temp.getNext();
-//            head = temp;
-//        }
-//        while (!(temp == null) && !(temp.getNext() == null)) {
-//            if (temp.getNext().getNext()==null){
-//                temp.setNext(null);
-//            }
-//            while (temp.getNext().getValue() == value) {
-//                temp.setNext(temp.getNext().getNext());
-//            }
-//            temp = temp.getNext();
-//        }
-//    }todo
-
     public void remove(T value) {
         Node<T> temp = head;
         if (head == null) {
@@ -58,6 +45,23 @@ public class Stack<T> {
                 return;
             }
             temp = temp.getNext();
+        }
+    }
+
+    public void removeAll(T value){
+        Node<T> temp = head;
+        if (head == null){
+            return;
+        }
+        while (temp.getNext() != null){
+            if (temp.getNext().getValue().equals(value)){
+                temp.setNext(temp.getNext().getNext());
+                continue;
+            }
+            temp = temp.getNext();
+        }
+        if (head.getValue().equals(value)){
+            head = head.getNext();
         }
     }
 

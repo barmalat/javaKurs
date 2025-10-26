@@ -4,21 +4,23 @@ public class App {
         Stack<String> stack2 = new Stack<>();
         Stack<Point> stack3 = new Stack<>();
 
+        stack.push(8);
         stack.push(2);
-        stack.push(3);
         stack.push(8);
         System.out.println("Wartość na head: " + stack.getHead().getValue());
 
         stack.printAll();
 
         System.out.println();
-        stack.remove(2);
+        stack.removeAll(8);
         stack.printAll();
 
         stack2.push("A");
         stack2.push("B");
-        stack2.push("C");
+        stack2.push("A");
         stack2.push("D");
+        stack2.printAll();
+        stack2.removeAll("A");
         stack2.printAll();
 
         stack3.push(new Point(2,8));
