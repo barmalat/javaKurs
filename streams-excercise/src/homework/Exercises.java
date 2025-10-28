@@ -1,5 +1,6 @@
 package homework;
 
+import homework.generator.CompanyGenerator;
 import homework.generator.HoldingGenerator;
 import homework.model.*;
 import homework.model.Currency;
@@ -10,6 +11,7 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -18,20 +20,28 @@ public class Exercises {
     private static final List<Holding> holdings = new HoldingGenerator().generate();
 
     public static void main(String[] args) {
+        System.out.println(getHoldingsWhereAreCompanies());
+        System.out.println(getHoldingNames());
+        System.out.println(getHoldingNamesAsString());
     }
 
     /**
      * Napisz metodę, która zwróci liczbę holdingów, w których jest przynajmniej jedna firma.
      */
     public static long getHoldingsWhereAreCompanies() {
-        return 0;
+        Stream<Holding> getHoldingsWhereAreCompanies = holdings.stream()
+                .filter(holding -> holding.getCompanies() != null);
+        return getHoldingsWhereAreCompanies.count();
     }
 
     /**
      * Napisz metodę, która zwróci nazwy wszystkich holdingów pisane z wielkiej litery w formie listy.
      */
     public static List<String> getHoldingNames() {
-        return null;
+        Stream<String> getHoldingNames = holdings.stream()
+                .map(Holding::getName)
+                .map(String::toUpperCase);
+        return getHoldingNames.collect(Collectors.toList());
     }
 
     /**
@@ -39,7 +49,10 @@ public class Exercises {
      * String ma postać: (Coca-Cola, Nestle, Pepsico)
      */
     public static String getHoldingNamesAsString() {
-        return null;
+        Stream<String> getHoldingNamesAsString = holdings.stream()
+                .map(Holding::getName)
+                .sorted();
+        return getHoldingNamesAsString.collect(Collectors.joining(", "));
     }
 
     /**
