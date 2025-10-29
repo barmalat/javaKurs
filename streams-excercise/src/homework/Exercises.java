@@ -20,28 +20,34 @@ public class Exercises {
     private static final List<Holding> holdings = new HoldingGenerator().generate();
 
     public static void main(String[] args) {
-        System.out.println(getHoldingsWhereAreCompanies());
-        System.out.println(getHoldingNames());
-        System.out.println(getHoldingNamesAsString());
+        System.out.println("1: " + getHoldingsWhereAreCompanies());
+        System.out.println("2: " + getHoldingNames());
+        System.out.println("3: " + getHoldingNamesAsString());
+        System.out.println("4: " + getCompaniesAmount());
+        System.out.println("5: " + getAllUserAmount());
+        System.out.println("6: " + getAllCompaniesNamesAsLinkedList());
+        //System.out.println("7: " + getAccountAmountInPLN());
+        System.out.println("8: " +getUsersForPredicate(user -> user.getSex()==Sex.OTHER));
+
     }
 
     /**
      * Napisz metodę, która zwróci liczbę holdingów, w których jest przynajmniej jedna firma.
      */
     public static long getHoldingsWhereAreCompanies() {
-        Stream<Holding> getHoldingsWhereAreCompanies = holdings.stream()
-                .filter(holding -> holding.getCompanies() != null);
-        return getHoldingsWhereAreCompanies.count();
+        return holdings.stream()
+                .filter(holding -> holding.getCompanies() != null)
+                .count();
     }
 
     /**
      * Napisz metodę, która zwróci nazwy wszystkich holdingów pisane z wielkiej litery w formie listy.
      */
     public static List<String> getHoldingNames() {
-        Stream<String> getHoldingNames = holdings.stream()
+        return holdings.stream()
                 .map(Holding::getName)
-                .map(String::toUpperCase);
-        return getHoldingNames.collect(Collectors.toList());
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -49,17 +55,19 @@ public class Exercises {
      * String ma postać: (Coca-Cola, Nestle, Pepsico)
      */
     public static String getHoldingNamesAsString() {
-        Stream<String> getHoldingNamesAsString = holdings.stream()
+        return holdings.stream()
                 .map(Holding::getName)
-                .sorted();
-        return getHoldingNamesAsString.collect(Collectors.joining(", "));
+                .sorted()
+                .collect(Collectors.joining(", "));
     }
 
     /**
      * Zwraca liczbę firm we wszystkich holdingach.
      */
     public static long getCompaniesAmount() {
-        return 0;
+        return holdings.stream()
+                .flatMap(Holding -> Holding.getCompanies().stream())
+                .count();
     }
 
 
@@ -67,7 +75,10 @@ public class Exercises {
      * Zwraca liczbę wszystkich pracowników we wszystkich firmach.
      */
     public static long getAllUserAmount() {
-        return 0;
+        return holdings.stream()
+                .flatMap(Holding -> Holding.getCompanies().stream())
+                .flatMap(Company -> Company.getUsers().stream())
+                .count();
     }
 
     /**
@@ -75,7 +86,10 @@ public class Exercises {
      * po zakończeniu działania strumienia.
      */
     public static LinkedList<String> getAllCompaniesNamesAsLinkedList() {
-        return null;
+        return holdings.stream()
+                .flatMap(holding -> holding.getCompanies().stream())
+                .map(Company -> String.valueOf(Company.getName()))
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
@@ -92,7 +106,12 @@ public class Exercises {
      * Zwraca imiona użytkowników w formie zbioru, którzy spełniają podany warunek.
      */
     public static Set<String> getUsersForPredicate(final Predicate<User> userPredicate) {
-        return null;
+        return holdings.stream()
+                .flatMap(holding -> holding.getCompanies().stream())
+                .flatMap(company -> company.getUsers().stream())
+                .filter(userPredicate)
+                .map(user -> String.valueOf(user.getFirstName()))
+                .collect(Collectors.toSet());
     }
 
     /**
