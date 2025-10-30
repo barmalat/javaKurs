@@ -8,8 +8,7 @@ public class task3 {
     public static void main(String[] args) {
         List<String> sentences = Arrays.asList("hello world", "java streams", "world of code");
 
-        String test = sentences
-                .stream()
+        String test = sentences.stream()
                 .flatMap(string-> Arrays.stream(string.split(" ")))
                 .distinct()
                 .sorted()
