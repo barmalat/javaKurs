@@ -84,7 +84,7 @@ public class Exercises {
      */
     public static long getCompaniesAmount() {
         return holdings.stream()
-                .flatMap(Holding -> Holding.getCompanies().stream())
+                .flatMap(holding -> holding.getCompanies().stream())
                 .count();
     }
 

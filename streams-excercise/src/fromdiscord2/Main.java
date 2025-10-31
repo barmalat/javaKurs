@@ -1,10 +1,8 @@
 package fromdiscord2;
 
+import javax.sql.rowset.Predicate;
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -38,6 +36,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println(productsOrderedByMoreThanThreePeople());
+        System.out.println(totalExpensesByClient());
     }
 //    Zadania
 //1. Produkty zamawiane przez więcej niż 3 różnych klientów
@@ -49,7 +48,7 @@ public class Main {
                 .values().stream()
                 .collect(Collectors.groupingBy(Order::getProductName))
                 .values().stream()
-                .filter(list->list.size()>3)
+                .filter(list -> list.size() > 3)
                 .flatMap(List::stream)
                 .map(Order::getProductName)
                 .distinct()
@@ -58,9 +57,36 @@ public class Main {
 
 //2. Suma wydatków każdego klienta
 //      Zwróć Map<String, BigDecimal> – dla każdego klienta oblicz sumę wydatków na podstawie liczby sztuk i ceny produktu.
-//
+
+    public static Map<String, BigDecimal> totalExpensesByClient() {
+        return orders.stream()
+                .collect(Collectors.groupingBy(
+                        order -> order.getClientName() + " from " + order.getRegion(),
+                        Collectors.reducing(
+                                BigDecimal.ZERO,
+                                order -> {
+                                    Product product = products.stream()
+                                            .filter(p -> p.getName().equals(order.getProductName()))
+                                            .findFirst().orElseThrow();
+                                    return product.getPrice()
+                                            .multiply(BigDecimal.valueOf(order.getQuantity()));
+                                },
+                                BigDecimal::add
+                        )
+                ));
+    }
+
 //3. Dla każdej kategorii podaj zestaw regionów, w których była zamawiana
 //      Zwróć Map<String, Set<String>>, gdzie kluczem jest kategoria (Product.category), a wartością zestaw regionów, w których złożono zamówienia na produkty z tej kategorii.
+
+//    public static Map<String, Set<String>> regionsOrders(){
+//        return products.stream()
+//                .collect(Collectors.groupingBy(product -> product.getCategory(),
+//                        Collectors.
+//                                }
+//                        )))
+//    }
+
 //
 //4. Najdroższy produkt zamówiony ogółem
 //      Zwróć pojedynczy obiekt Product, który był najdroższy spośród tych, które faktycznie zostały zamówione (czyli znajdują się w Order).
