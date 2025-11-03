@@ -101,7 +101,7 @@ public class Main {
         String mostExpensiveProductNameInOrders = orders.stream()
                 .map(Order::getProductName)
                 .min(Comparator.comparing(productsByPrice::indexOf))
-                .orElseThrow();
+                .orElseThrow(()->new IllegalStateException("orders list is empty"));
         return products.stream()
                 .filter(product -> product.getName().equals(mostExpensiveProductNameInOrders))
                 .findFirst()

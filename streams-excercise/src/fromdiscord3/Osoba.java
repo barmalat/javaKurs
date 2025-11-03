@@ -34,4 +34,9 @@ public class Osoba {
     public void setNumer(String numer) {
         this.numer = numer;
     }
+
+    @Override
+    public String toString() {
+        return imie + " " + nazwisko + " " + numer;
+    }
 }
