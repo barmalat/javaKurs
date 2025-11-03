@@ -37,6 +37,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(productsOrderedByMoreThanThreePeople());
         System.out.println(totalExpensesByClient());
+        System.out.println(regionsOrders());
+        System.out.println(mostExpensiveProductInOrders().getName());
     }
 //    Zadania
 //1. Produkty zamawiane przez więcej niż 3 różnych klientów
@@ -79,19 +81,37 @@ public class Main {
 //3. Dla każdej kategorii podaj zestaw regionów, w których była zamawiana
 //      Zwróć Map<String, Set<String>>, gdzie kluczem jest kategoria (Product.category), a wartością zestaw regionów, w których złożono zamówienia na produkty z tej kategorii.
 
-//    public static Map<String, Set<String>> regionsOrders(){
-//        return products.stream()
-//                .collect(Collectors.groupingBy(product -> product.getCategory(),
-//                        Collectors.
-//                                }
-//                        )))
-//    }
+    public static Map<String, Set<String>> regionsOrders() {
+        Map<String, String> productCategory = products.stream()
+                .collect(Collectors.toMap(Product::getName, Product::getCategory));
 
-//
+        return orders.stream()
+                .collect(Collectors.groupingBy(order -> productCategory.get(order.getProductName()),
+                        Collectors.mapping(Order::getRegion, Collectors.toSet())));
+    }
+
+    //
 //4. Najdroższy produkt zamówiony ogółem
 //      Zwróć pojedynczy obiekt Product, który był najdroższy spośród tych, które faktycznie zostały zamówione (czyli znajdują się w Order).
-//
+    public static Product mostExpensiveProductInOrders() {
+        List<String> productsByPrice = products.stream()
+                .sorted(Comparator.comparing(Product::getPrice).reversed())
+                .map(Product::getName)
+                .toList();
+        String mostExpensiveProductNameInOrders = orders.stream()
+                .map(Order::getProductName)
+                .min(Comparator.comparing(productsByPrice::indexOf))
+                .orElseThrow();
+        return products.stream()
+                .filter(product -> product.getName().equals(mostExpensiveProductNameInOrders))
+                .findFirst()
+                .orElseThrow();
+    }
+
 //5. Czy w każdym regionie zamawiano coś z kategorii "Electronics"?
 //      Zwróć Map<String, Boolean>, gdzie kluczem jest region, a wartością true jeśli w tym regionie zamówiono jakikolwiek produkt z kategorii "Electronics".
 //      podpowiastka uzyć gdzieś trzeba Collectors.reducing
+
+
+
 }
