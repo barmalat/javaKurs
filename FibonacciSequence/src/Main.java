@@ -1,34 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("30: " + nTermOfTheFibonacciSequence(30));
+        System.out.println("60: " + nTermOfTheFibonacciSequence(60));
+    }
+
+    static List<Long> memory = new ArrayList<>();
+
+    static {
+        memory.add(0L);
+        memory.add(1L);
     }
 
     public static long nTermOfTheFibonacciSequence(int n) {
-        if (n==40){
-            return 102334155;
+        if (memory.size() <= n) {
+            Long result = nTermOfTheFibonacciSequence(n - 1) + nTermOfTheFibonacciSequence(n - 2);
+            memory.add(result);
         }
-        if (n == 1) {
-            return 1;
-        }
-        if (n == 0) {
-            return 0;
-        }
-        return nTermOfTheFibonacciSequence(n - 1) + nTermOfTheFibonacciSequence(n - 2);
+            return memory.get(n);
     }
 }
-
-//public class Main {
-//    public static void main(String[] args) {
-//        System.out.println("5: " + nTermOfTheFibonacciSequence(BigInteger.valueOf(1)));
-//    }
-//
-//    public static BigInteger nTermOfTheFibonacciSequence(BigInteger n) {
-//        if (n.equals(1)) {
-//            return BigInteger.valueOf(1);
-//        }
-//        if (n.equals(0)) {
-//            return BigInteger.valueOf(0);
-//        }
-//        return nTermOfTheFibonacciSequence(n.subtract(BigInteger.valueOf(1))).add(nTermOfTheFibonacciSequence(n.subtract(BigInteger.valueOf(2))));
-//    }
-//}
