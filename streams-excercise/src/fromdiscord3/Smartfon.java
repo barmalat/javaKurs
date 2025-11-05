@@ -1,6 +1,6 @@
 package fromdiscord3;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 
 public class Smartfon extends Komorka implements WyswietlHistoriePolaczen {

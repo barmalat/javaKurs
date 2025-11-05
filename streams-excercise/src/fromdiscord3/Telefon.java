@@ -1,6 +1,7 @@
 package fromdiscord3;
 
-import java.awt.*;
+
+import java.awt.Color;
 
 public class Telefon implements WyswietlHistoriePolaczen {
     private String interfejsKomunikacyjny;
