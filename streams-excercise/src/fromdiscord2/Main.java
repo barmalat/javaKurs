@@ -1,6 +1,5 @@
 package fromdiscord2;
 
-import javax.sql.rowset.Predicate;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
@@ -21,6 +20,7 @@ public class Main {
             new Order("Bob", "Phone", 2, "North"),
             new Order("Charlie", "Laptop", 1, "West"),
             new Order("Alice", "Table", 3, "East"),
+            new Order("Alice", "Table", 2, "East"),
             new Order("David", "Laptop", 2, "South"),
             new Order("Eve", "TV", 1, "North"),
             new Order("Frank", "Laptop", 1, "West"),
@@ -39,16 +39,26 @@ public class Main {
         System.out.println(totalExpensesByClient());
         System.out.println(regionsOrders());
         System.out.println(mostExpensiveProductInOrders().getName());
+        System.out.println(uniqueProductsOrdersByUniqueClients());
+        System.out.println(categoriesAndRegions("Electronics"));
     }
 //    Zadania
 //1. Produkty zamawiane przez więcej niż 3 różnych klientów
 //      Zwróć listę nazw produktów (List<String>), które zostały zamówione przez więcej niż trzech unikalnych klientów.
 
-    public static List<String> productsOrderedByMoreThanThreePeople() {
+    public static Map<String, Order> uniqueProductsOrdersByUniqueClients() {
         return orders.stream()
-                .collect(Collectors.toMap(order -> order.getClientName() + order.getProductName() + order.getRegion(), Function.identity(), (order, order2) -> order))
+                .collect(Collectors.toMap(order -> order.getClientName() + order.getProductName() + order.getRegion(), Function.identity(), (order, order2) -> order));
+    }
+
+    public static Map<String, List<Order>> uniqueProductsOrdersByUniqueClientsGroupingByProductName() {
+        return uniqueProductsOrdersByUniqueClients()
                 .values().stream()
-                .collect(Collectors.groupingBy(Order::getProductName))
+                .collect(Collectors.groupingBy(Order::getProductName));
+    }
+
+    public static List<String> productsOrderedByMoreThanThreePeople() {
+        return uniqueProductsOrdersByUniqueClientsGroupingByProductName()
                 .values().stream()
                 .filter(list -> list.size() > 3)
                 .flatMap(List::stream)
@@ -81,37 +91,52 @@ public class Main {
 //3. Dla każdej kategorii podaj zestaw regionów, w których była zamawiana
 //      Zwróć Map<String, Set<String>>, gdzie kluczem jest kategoria (Product.category), a wartością zestaw regionów, w których złożono zamówienia na produkty z tej kategorii.
 
-    public static Map<String, Set<String>> regionsOrders() {
-        Map<String, String> productCategory = products.stream()
+    public static Map<String, String> productCategory() {
+        return products.stream()
                 .collect(Collectors.toMap(Product::getName, Product::getCategory));
+    }
 
+    public static Map<String, Set<String>> regionsOrders() {
         return orders.stream()
-                .collect(Collectors.groupingBy(order -> productCategory.get(order.getProductName()),
+                .collect(Collectors.groupingBy(order -> productCategory().get(order.getProductName()),
                         Collectors.mapping(Order::getRegion, Collectors.toSet())));
     }
 
-    //
-//4. Najdroższy produkt zamówiony ogółem
+    //4. Najdroższy produkt zamówiony ogółem
 //      Zwróć pojedynczy obiekt Product, który był najdroższy spośród tych, które faktycznie zostały zamówione (czyli znajdują się w Order).
-    public static Product mostExpensiveProductInOrders() {
-        List<String> productsByPrice = products.stream()
+    public static List<String> productsByPrice() {
+        return products.stream()
                 .sorted(Comparator.comparing(Product::getPrice).reversed())
                 .map(Product::getName)
                 .toList();
-        String mostExpensiveProductNameInOrders = orders.stream()
+    }
+
+    public static String mostExpensiveProductNameInOrders() {
+        return orders.stream()
                 .map(Order::getProductName)
-                .min(Comparator.comparing(productsByPrice::indexOf))
-                .orElseThrow(()->new IllegalStateException("orders list is empty"));
+                .min(Comparator.comparing(productsByPrice()::indexOf))
+                .orElseThrow(() -> new IllegalStateException("orders list is empty"));
+    }
+
+    public static Product mostExpensiveProductInOrders() {
         return products.stream()
-                .filter(product -> product.getName().equals(mostExpensiveProductNameInOrders))
+                .filter(product -> product.getName().equals(mostExpensiveProductNameInOrders()))
                 .findFirst()
                 .orElseThrow();
     }
 
-//5. Czy w każdym regionie zamawiano coś z kategorii "Electronics"?
+    //5. Czy w każdym regionie zamawiano coś z kategorii "Electronics"?
 //      Zwróć Map<String, Boolean>, gdzie kluczem jest region, a wartością true jeśli w tym regionie zamówiono jakikolwiek produkt z kategorii "Electronics".
 //      podpowiastka uzyć gdzieś trzeba Collectors.reducing
+    public static Set<String> allRegions() {
+        return orders.stream()
+                .map(Order::getRegion)
+                .collect(Collectors.toSet());
+    }
 
-
-
+    public static Map<String, Boolean> categoriesAndRegions(String categoryName) {
+        Set<String> regionsWithCategory = regionsOrders().getOrDefault(categoryName, Set.of());
+        return allRegions().stream()
+                .collect(Collectors.toMap(Function.identity(), regionsWithCategory::contains));
+    }
 }

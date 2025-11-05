@@ -2,15 +2,10 @@ package fromdiscord3;
 
 import java.awt.*;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class Smartfon extends Komorka implements WyswietlHistoriePolaczen {
     public Osoba[] getZnajomi() {
         return znajomi;
-    }
-
-    public void setZnajomi(Osoba[] znajomi) {
-        this.znajomi = znajomi;
     }
 
     private Osoba[] znajomi;

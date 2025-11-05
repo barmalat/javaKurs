@@ -15,22 +15,6 @@ public class Telefon implements WyswietlHistoriePolaczen {
         this.color = color;
     }
 
-    public String getInterfejsKomunikacyjny() {
-        return interfejsKomunikacyjny;
-    }
-
-    public void setInterfejsKomunikacyjny(String interfejsKomunikacyjny) {
-        this.interfejsKomunikacyjny = interfejsKomunikacyjny;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     @Override
     public void wyswietlHistoriePolaczen() {
         System.out.println("brak historii");

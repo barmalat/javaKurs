@@ -19,11 +19,6 @@ public class Komorka extends Telefon implements WyswietlHistoriePolaczen{
         super(interfejsKomunikacyjny, color);
     }
 
-
-    public void setLastTenCalls(String[] lastTenCalls) {
-        this.lastTenCalls = lastTenCalls;
-    }
-
     @Override
     public void wyswietlHistoriePolaczen() {
         System.out.println(Arrays.toString(lastTenCalls));
