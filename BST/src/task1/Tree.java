@@ -40,13 +40,7 @@ public class Tree {
         if (root == null) {
             System.out.println("Drzewo jest puste!");
         } else {
-            if (root.getLeft() != null) {
-                inOrderRec(root.getLeft());
-            }
-            System.out.println(root.getValue());
-            if (root.getRight() != null) {
-                inOrderRec(root.getRight());
-            }
+            inOrderRec(root);
         }
     }
 
