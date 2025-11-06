@@ -29,7 +29,7 @@ public class task4 {
         System.out.println(empsUnder25);
 
         List<String> empsUnder25list = empsUnder25.stream()
-                .map(employee -> employee.getName())
+                .map(Employee::getName)
                 .sorted()
                 .toList();
         System.out.println(empsUnder25list);

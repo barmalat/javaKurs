@@ -7,7 +7,7 @@ public class Telefon implements WyswietlHistoriePolaczen {
     private String interfejsKomunikacyjny;
     private Color color;
 
-    public void zadzwon(String number){
+    public void zadzwon(String number) {
         System.out.println("Dzwonię pod numer: " + number);
     }
 

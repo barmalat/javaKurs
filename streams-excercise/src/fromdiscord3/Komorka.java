@@ -1,16 +1,17 @@
 package fromdiscord3;
 
-import java.awt.*;
+
+import java.awt.Color;
 import java.util.Arrays;
 
-public class Komorka extends Telefon implements WyswietlHistoriePolaczen{
+public class Komorka extends Telefon implements WyswietlHistoriePolaczen {
     protected String[] lastTenCalls = new String[10];
 
     @Override
     public void zadzwon(String number) {
         super.zadzwon(number);
-        for (int i = 9; i >0 ; i--) {
-            lastTenCalls[i] = lastTenCalls[i-1];
+        for (int i = 9; i > 0; i--) {
+            lastTenCalls[i] = lastTenCalls[i - 1];
         }
         lastTenCalls[0] = number;
     }

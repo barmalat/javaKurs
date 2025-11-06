@@ -30,19 +30,19 @@ public class Exercises {
         System.out.println("6: " + getAllCompaniesNamesAsLinkedList());
         System.out.println("7: " + getAccountAmountInPLN(users.getFirst().getAccounts().getFirst()));
         System.out.println("8: " + getUsersForPredicate(user -> user.getSex() == Sex.OTHER));
-        System.out.println("9: ");  executeForEachCompany(company -> System.out.println(company.getName()));
+        System.out.println("9: ");
+        executeForEachCompany(company -> System.out.println(company.getName()));
         System.out.println("10: " + getRichestWoman()
-                .map(user -> String.valueOf(user.getFirstName() + " " + user.getLastName())));
+                .map(user -> user.getFirstName() + " " + user.getLastName()));
         System.out.println("11: " + getFirstNCompany(4));
         System.out.println("12: " + getUserPerCompany());
         String getUserToString = getUser(user -> user.getAge() > 10).getFirstName();
         System.out.println("13: " + getUserToString);
-        System.out.println("14: " + getAccoutStream());
+        System.out.println("14: " + createAccountsMap());
         System.out.println("15: " + getUserNames());
         System.out.print("16: ");
         showAllUser();
         System.out.println("17: " + getCurenciesSet());
-
     }
 
     /**
@@ -87,7 +87,6 @@ public class Exercises {
                 .flatMap(holding -> holding.getCompanies().stream())
                 .count();
     }
-
 
     /**
      * 5

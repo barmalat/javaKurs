@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.util.Arrays;
 
 public class Smartfon extends Komorka implements WyswietlHistoriePolaczen {
-    public Osoba[] getZnajomi() {
-        return znajomi;
-    }
 
     private Osoba[] znajomi;
 
@@ -21,7 +18,7 @@ public class Smartfon extends Komorka implements WyswietlHistoriePolaczen {
     }
 
     public String numberInBookFormated(String number) {
-        return Arrays.stream(getZnajomi())
+        return Arrays.stream(znajomi)
                 .filter(osoba -> osoba.getNumer().equals(number))
                 .findFirst()
                 .map(Object::toString)
