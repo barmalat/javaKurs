@@ -20,20 +20,37 @@ public class Tree {
         return node;
     }
 
-    public boolean contain(int value) {
+    public void insertIterative(int newValue) {
+        Node newNode = new Node(newValue);
         if (root == null) {
-            return false;
-        } else return containRec(root, value);
+            root = newNode;
+            return;
+        }
+        Node parent = root;
+        Node temp = root;
+        while (temp != null) {
+            parent = temp;
+            if (newValue > temp.getValue()) {
+                temp = temp.getRight();
+            } else {
+                temp = temp.getLeft();
+            }
+        }
+        if (newValue > parent.getValue()) {
+            parent.setRight(newNode);
+        } else {
+            parent.setLeft(newNode);
+        }
     }
 
-    public boolean containRec(Node node, int value) {
-        if (value == node.getValue()) {
-            return true;
-        } else if ((value > node.getValue() && node.getRight() == null) || value < node.getValue() && node.getLeft() == null) {
-            return false;
-        } else if (value > node.getValue()) {
-            return containRec(node.getRight(), value);
-        } else return containRec(node.getLeft(), value);
+    public boolean contains(int value) {
+        return containsRec(root, value);
+    }
+
+    public boolean containsRec(Node node, int value) {
+        if (node == null) return false;
+        if (value == node.getValue()) return true;
+        return value > node.getValue() ? containsRec(node.getRight(), value) : containsRec(node.getLeft(), value);
     }
 
     public void inOrder() {
@@ -45,11 +62,9 @@ public class Tree {
     }
 
     public void inOrderRec(Node node) {
-        if (node.getLeft() != null) {
+        if (node != null) {
             inOrderRec(node.getLeft());
-        }
-        System.out.println(node.getValue());
-        if (node.getRight() != null) {
+            System.out.print(node.getValue() + ", ");
             inOrderRec(node.getRight());
         }
     }
