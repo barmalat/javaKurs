@@ -12,8 +12,12 @@ public class App {
         tree.insert(4);
         tree.insert(3);
         tree.insert(1);
-        System.out.println(tree.contains(5));
-
+        tree.insertIterative(14);
+        System.out.println(tree.containsIterative(5));
         tree.inOrder();
+        tree.delete(14);
+        System.out.println();
+        tree.inOrder();
+
     }
 }

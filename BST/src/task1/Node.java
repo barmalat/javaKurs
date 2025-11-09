@@ -25,6 +25,10 @@ public class Node {
         return right;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     public void setRight(Node right) {
         this.right = right;
     }

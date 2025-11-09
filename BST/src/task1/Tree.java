@@ -53,6 +53,17 @@ public class Tree {
         return value > node.getValue() ? containsRec(node.getRight(), value) : containsRec(node.getLeft(), value);
     }
 
+    public boolean containsIterative(int value) {
+        Node temp = root;
+        while (temp != null) {
+            if (temp.getValue() == value) return true;
+            if (value > temp.getValue()) {
+                temp = temp.getRight();
+            } else temp = temp.getLeft();
+        }
+        return false;
+    }
+
     public void inOrder() {
         if (root == null) {
             System.out.println("Drzewo jest puste!");
@@ -67,5 +78,31 @@ public class Tree {
             System.out.print(node.getValue() + ", ");
             inOrderRec(node.getRight());
         }
+    }
+
+    public void delete(int value) {
+        deleteRec(root, value);
+    }
+
+    public Node deleteRec(Node node, int value) {
+        if (node == null) return null;
+        if (value < node.getValue()) node.setLeft(deleteRec(node.getLeft(), value));
+        else if (value > node.getValue()) node.setRight(deleteRec(node.getRight(), value));
+        else {
+            if (node.getLeft() == null) return node.getRight();
+            if (node.getRight() == null) return node.getLeft();
+            node.setValue(minValue(node.getRight()));
+            node.setRight(deleteRec(node.getRight(), node.getValue()));
+        }
+        return node;
+    }
+
+    public int minValue(Node node) {
+        int min = node.getValue();
+        while (node.getLeft() != null) {
+            min = node.getLeft().getValue();
+            node = node.getLeft();
+        }
+        return min;
     }
 }
