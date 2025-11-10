@@ -18,7 +18,7 @@ public class App {
         return orders.stream()
                 .map(Order::getValue)
                 .reduce(BigDecimal::add)
-                .orElseThrow();
+                .orElseThrow(()-> new IllegalStateException("Lista zamówień jest pusta."));
     }
 
     public static final List<Order> orders = List.of(new Order("Piwo", BigDecimal.valueOf(90)),
