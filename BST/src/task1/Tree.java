@@ -50,7 +50,9 @@ public class Tree {
     public boolean containsRec(Node node, int value) {
         if (node == null) return false;
         if (value == node.getValue()) return true;
-        return value > node.getValue() ? containsRec(node.getRight(), value) : containsRec(node.getLeft(), value);
+        return value > node.getValue() ?
+                containsRec(node.getRight(), value) :
+                containsRec(node.getLeft(), value);
     }
 
     public boolean containsIterative(int value) {

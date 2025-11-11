@@ -18,6 +18,5 @@ public class App {
         tree.delete(14);
         System.out.println();
         tree.inOrder();
-
     }
 }
