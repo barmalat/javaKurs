@@ -6,41 +6,35 @@ import static java.lang.Thread.sleep;
 
 public class SharedResource2 {
     private Integer value = null;
-    Queue kolejka = new LinkedList();
+    final Queue<Integer> kolejka = new LinkedList<>();
 
-    public synchronized void produce() {
-        while (kolejka.size() == 5) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    public void produce() {
+        synchronized (kolejka) {
+            while (kolejka.size() == 30) {
+                try {
+                    kolejka.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            value = new Random().nextInt();
+            kolejka.add(value);
+            System.out.println("producing value: " + value + " stan kolejki: " + kolejka.size());
+            kolejka.notifyAll();
         }
-        value = new Random().nextInt();
-        kolejka.add(value);
-        System.out.println("producing value: " + value + " stan kolejki: " + kolejka.size());
-        try {
-            sleep(new Random().nextInt(600));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        notifyAll();
     }
 
-    public synchronized void consume() {
-        while (kolejka.size() == 0) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    public void consume() {
+        synchronized (kolejka) {
+            while (kolejka.isEmpty()) {
+                try {
+                    kolejka.wait();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
+            System.out.println(Thread.currentThread().getName() + " consuming value: " + kolejka.poll() + " stan kolejki: " + kolejka.size());
+            kolejka.notifyAll();
         }
-        System.out.println(Thread.currentThread().getName() + " consuming value: " + kolejka.poll() + " stan kolejki: " + kolejka.size());
-        try {
-            sleep(300);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        notifyAll();
     }
 }
