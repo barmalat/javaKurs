@@ -3,16 +3,16 @@ import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 
-public class Main3 {
+public class Main4 {
     public static void main(String[] args) {
-        SharedResource3 sharedResource3 = new SharedResource3();
+        SharedResource4 sharedResource4 = new SharedResource4();
         Thread consumer = new Thread(() -> IntStream.range(0, 100).forEach(i -> {
             try {
                 sleep(3000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            sharedResource3.consume();
+            sharedResource4.consume();
         }));
         Thread consumer2 = new Thread(() -> IntStream.range(0, 100).forEach(i -> {
             try {
@@ -20,7 +20,7 @@ public class Main3 {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            sharedResource3.consume();
+            sharedResource4.consume();
         }));
         Thread consumer3 = new Thread(() -> IntStream.range(0, 100).forEach(i -> {
             try {
@@ -28,7 +28,7 @@ public class Main3 {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            sharedResource3.consume();
+            sharedResource4.consume();
         }));
         Thread producer = new Thread(() -> IntStream.range(0, 300).forEach(i -> {
             try {
@@ -36,7 +36,7 @@ public class Main3 {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            sharedResource3.produce();
+            sharedResource4.produce();
         }));
         consumer.start();
         consumer2.start();

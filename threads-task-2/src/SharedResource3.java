@@ -2,11 +2,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import static java.lang.Thread.sleep;
-
-public class SharedResource2 {
+public class SharedResource3 {
     private Integer value = null;
-    final Queue<Integer> kolejka = new LinkedList<>();
+    private final Queue<Integer> kolejka = new LinkedList<>();
 
     public void produce() {
         synchronized (kolejka) {
