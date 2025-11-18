@@ -41,7 +41,7 @@ public class SharedResource4 {
             }
             System.out.println(Thread.currentThread().getName() + " consuming value: " + kolejka.poll() + " stan kolejki: " + kolejka.size());
 
-            notFull.signalAll();
+            notFull.signal();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
