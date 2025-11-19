@@ -16,38 +16,53 @@ public class MyThread2 implements Runnable {
 
     @Override
     public void run() {
-        lock.lock();
         try {
             if (mess.equals("Ping")) {
-                while (!pingTurn) {
-                    notPing.await();
+                for (int i = 0; i < 10; i++) {
+                    ping();
                 }
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println(mess);
-                pingTurn = false;
-                notPong.signal();
             }
             if (mess.equals("Pong")) {
-                while (pingTurn) {
-                    notPong.await();
+                for (int i = 0; i < 10; i++) {
+                    pong();
                 }
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println(mess);
-                pingTurn = true;
-                notPing.signal();
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             lock.unlock();
         }
+    }
+
+    private void ping() throws InterruptedException {
+        lock.lock();
+        while (!pingTurn) {
+            notPing.await();
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(mess);
+        pingTurn = false;
+        notPong.signal();
+        lock.unlock();
+    }
+
+    private void pong() throws InterruptedException {
+        lock.lock();
+        while (pingTurn) {
+            notPong.await();
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(mess);
+        pingTurn = true;
+        notPing.signal();
+        lock.unlock();
     }
 }
