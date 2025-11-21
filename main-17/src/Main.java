@@ -27,6 +27,5 @@ public class Main {
         System.out.println("Godzina spotkania w Nowym Jorku: " + spotkanieNowyJork);
         System.out.println("Godzina spotkania w Tokio: " + spotkanieTokio);
 
-
     }
 }
